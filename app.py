@@ -13,5 +13,9 @@ def hello():
 def home():
     return "Hello, home!"
 
+@app.route('/ktm')
+def ktm():
+    return "Hello, Welcome to kathmandu!"
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
