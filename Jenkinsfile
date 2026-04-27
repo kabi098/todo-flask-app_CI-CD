@@ -9,21 +9,17 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'pip3 install -r requirements.txt'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                sh 'python3 -m unittest test_app.py'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t flask-cicd-app .'
+            }
+        }
+
+        stage('Run Tests inside Docker') {
+            steps {
+                sh '''
+                docker run --rm flask-cicd-app python -m unittest test_app.py
+                '''
             }
         }
 
