@@ -26,8 +26,10 @@ pipeline {
         stage('Run Container') {
             steps {
                 sh '''
-                docker stop flask-cicd-app || true
-                docker rm flask-cicd-app || true
+                echo "Cleaning old container..."
+                docker rm -f flask-cicd-app || true
+
+                echo "Starting new container..."
                 docker run -d -p 5000:5000 --name flask-cicd-app flask-cicd-app
                 '''
             }
@@ -38,7 +40,9 @@ pipeline {
                 sh '''
                 echo "Waiting for app to start..."
                 sleep 5
-                curl http://localhost:5000/hello
+
+                echo "Testing endpoint inside container..."
+                docker exec flask-cicd-app curl http://localhost:5000/hello
                 '''
             }
         }
