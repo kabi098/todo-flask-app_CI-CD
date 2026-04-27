@@ -41,8 +41,11 @@ pipeline {
                 echo "Waiting for app to start..."
                 sleep 5
 
-                echo "Testing endpoint inside container..."
-                docker exec flask-cicd-app curl http://localhost:5000/hello
+                echo "Testing endpoint using Python..."
+                docker exec flask-cicd-app python -c "
+import urllib.request
+print(urllib.request.urlopen('http://localhost:5000/hello').read().decode())
+"
                 '''
             }
         }
