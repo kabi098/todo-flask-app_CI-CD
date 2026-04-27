@@ -35,7 +35,11 @@ pipeline {
 
         stage('Test Endpoint') {
             steps {
-                sh 'curl http://localhost:5000/hello'
+                sh '''
+                echo "Waiting for app to start..."
+                sleep 5
+                curl http://localhost:5000/hello
+                '''
             }
         }
     }
