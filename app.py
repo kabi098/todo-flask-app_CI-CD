@@ -17,5 +17,11 @@ def home():
 def ktm():
     return "Hello, Welcome to kathmandu!"
 
+@app.route('/pipeline')
+def pipeline():
+    return "Pipeline Triggred sucessfully"
+
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
